@@ -1,0 +1,30 @@
+{
+  "body": {
+    "data": {
+      "eventName": "ObjectCreated:PostObject",
+      "eventSource": "acs:oss",
+      "eventTime": "2024-01-18T05: 20: 27.000Z",
+      "eventVersion": "1.0",
+      "oss": [
+        {
+          "object": {
+            "key": "sourceCode2.zip"
+          }
+        }
+      ],
+      "region": "cn-beijing"
+    },
+    "id": "65A8B4B5E48B2B3032E877E2",
+    "source": "acs.oss",
+    "specversion": "1.0",
+    "type": "oss:ObjectCreated:PostObject",
+    "datacontenttype": "application/json;charset=utf-8",
+    "time": "2024-01-18T05: 20: 27.000Z",
+    "subject": "acs:oss:cn-beijing: 1493902894147399:bmap-base-image/sourceCode.zip",
+    "aliyunaccountid": "1493902894147399",
+    "aliyunpublishtime": "2024-01-18T05: 20: 28.007Z",
+    "aliyuneventbusname": "default",
+    "aliyunregionid": "cn-beijing",
+    "aliyunoriginalaccountid": "1493902894147399"
+  }
+}
