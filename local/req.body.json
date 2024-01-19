@@ -5,13 +5,24 @@
       "eventSource": "acs:oss",
       "eventTime": "2024-01-18T05: 20: 27.000Z",
       "eventVersion": "1.0",
-      "oss": [
-        {
-          "object": {
-            "key": "sourceCode2.zip"
-          }
-        }
-      ],
+      "oss": {
+        "bucket": {
+          "arn": "acs:oss:cn-beijing:1493902894147399:bmap-base-image",
+          "name": "bmap-base-image",
+          "ownerIdentity": "1493902894147399",
+          "virtualBucket": ""
+        },
+        "object": {
+          "deltaSize": 212,
+          "eTag": "085678524DC72FCFE9A4FB814735126E",
+          "key": "sourceCode2.zip", 
+          "objectMeta": {
+            "mimeType": "application/zip"
+          },
+          "size": 212
+        },
+        "ossSchemaVersion": "1.0"
+      },
       "region": "cn-beijing"
     },
     "id": "65A8B4B5E48B2B3032E877E2",

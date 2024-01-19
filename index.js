@@ -18,23 +18,22 @@ app.post('/initialize', (req, res) => {
 });
 
 // 事件函数调用
-app.post('/invoke', (req, res) => {
- console.log(JSON.stringify(req.headers),`req:`,req);
+app.post('/invoke', async (req, res) => {
+ //console.log(JSON.stringify(req.headers),`req:`,req);
  //var rid = req.headers[REQUEST_ID_HEADER]
  console.log(`FC Invoke Start`)
  try {
-   var bodyStr = req.body.toString();
-   console.log(JSON.parse(bodyStr));;
-   const paramsData = JSON.parse(bodyStr);
-   execZipFile(paramsData);
+   console.log(req.body,'params');;
+   const paramsData = req.body;
+   await execZipFile(paramsData);
+   res.send('OK');
  } catch (e) {
    console.error(e.stack || e);
    return res.status(404).send(e.stack || e);
  }
-
- res.send('OK');
- console.log(`FC Invoke End`)
+ console.log(`FC Invoke End`);
 });
+
 
 var server = app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
