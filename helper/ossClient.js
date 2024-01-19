@@ -1,10 +1,10 @@
 const OSS = require("ali-oss");
 const { isProd,ossClientTimeout } = require("./utils");
+const { unzipFile2Target } = require('./upzip')
 
 // 解析oss zip文件
 const execZipFile = async (event) => {
   const { data: ossData, ...other } = event;
-  console.log(other, "event other");
   const { region, oss } = ossData;
   const region_name = `oss-${region}`;
   const ossClient = new OSS({
@@ -23,15 +23,18 @@ const execZipFile = async (event) => {
   console.log('oss \n',JSON.stringify(oss));
   const fileName = oss.object.key;
   try {
+    const zipPath = `./tmp/${fileName}`;
+    // zip文件名不要出现特殊字符 . 等
+    const zipFileName = fileName.split('.')[0];
     const {res} = await ossClient.get(fileName, `./tmp/${fileName}`);
     if(res.status === 200) {
       //文件获取成功
-
+      unzipFile2Target(zipPath,zipFileName);
     }else{
       throw new Error(`get file failed:${JSON.stringify(res)}`)
     }
   } catch (error) {
-    console.log("err:", error);
+    throw new Error(error)
   }
 };
 

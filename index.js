@@ -19,8 +19,6 @@ app.post('/initialize', (req, res) => {
 
 // 事件函数调用
 app.post('/invoke', async (req, res) => {
- //console.log(JSON.stringify(req.headers),`req:`,req);
- //var rid = req.headers[REQUEST_ID_HEADER]
  console.log(`FC Invoke Start`)
  try {
    console.log(req.body,'params');;
