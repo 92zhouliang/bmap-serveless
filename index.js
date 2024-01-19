@@ -21,7 +21,7 @@ app.post('/initialize', (req, res) => {
 app.post('/invoke', async (req, res) => {
  console.log(`FC Invoke Start`)
  try {
-   console.log(req.body,'params');;
+  //  console.log(req.body,'params');;
    const paramsData = req.body;
    await execZipFile(paramsData);
    res.send('OK');
@@ -29,7 +29,6 @@ app.post('/invoke', async (req, res) => {
    console.error(e.stack || e);
    return res.status(404).send(e.stack || e);
  }
- console.log(`FC Invoke End`);
 });
 
 
