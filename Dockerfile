@@ -1,23 +1,30 @@
 # 使用官方的Ubuntu基础镜像
-FROM ubuntu:latest
+FROM ubuntu:20.04
 
 # 切换到root用户
 # USER root
 
-# 更新软件包列表并安装必要的依赖
-RUN apt-get update && apt-get install -y \ 
-    build-essential \    
-    sudo \    
-    uuid-dev \    
+# 更新软件包列表并安装必要的依赖 squashfs-tools-ng
+RUN apt-get update && apt-get upgrade -y && apt-get install sudo
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN sudo apt-get install -y -qq \  
+    vim \
+    curl \
+    tzdata \
+    build-essential \
+    libssl-dev \
+    uuid-dev \  
+    libudev-dev \ 
     libgpgme-dev \    
     squashfs-tools \    
-    libseccomp-dev \   
-    curl \ 
+    libseccomp-dev \    
     wget \    
     pkg-config \    
     git \    
     cryptsetup-bin && \    
-    apt-get clean
+    apt-get clean && \
+    rm -rf /tmp/* /var/cache/* /usr/share/doc/* /usr/share/man/* /var/lib/apt/lists/*
 
 # 进入usr/local
 WORKDIR /usr/local
@@ -37,12 +44,13 @@ RUN export VERSION=1.14.12 OS=linux ARCH=amd64 && \
 
 # 配置go PATH
 ENV GOPATH /go
-ENV PATH $PATH:/usr/local/go/bin:$GOPATH/bin
+ENV PATH $PATH:/usr/local/go/bin:$GOPATH/bin 
+ENV GOPROXY=https://goproxy.io.cn,direct
 
-# 下载 singularity脚本
-RUN git clone https://gitclone.com/github.com/hpcng/singularity.git && \    
+# 下载 singularity脚本 https://github.com/sylabs/singularity.git
+RUN git clone https://gitclone.com/github.com/sylabs/singularity.git && \    
     cd singularity && \    
-    git checkout v3.7.0
+    git checkout v3.5.1
 
 # singularity
 WORKDIR /usr/local/singularity
@@ -70,5 +78,5 @@ EXPOSE 9000
 # 定义环境变量
 ENV NODE_ENV production
 
-# 运行命令
-CMD ["npm", "start"]
+# 运行指令读取dockerfile配置
+CMD ["npm","run", "start"]
