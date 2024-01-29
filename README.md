@@ -49,4 +49,36 @@
    `sudo sysctl -w kernel.unprivileged_userns_clone=1`
 7. error: `ERROR   [U=0,P=84]         shared_mount_namespace_init() Failed to unshare root file system: Operation not permitted`
    docker run add parameter `--privileged` to fiexed
-8. [Dockerfile优化推荐](https://help.aliyun.com/zh/acr/user-guide/dockerfile-syntax-analysis-function?spm=5176.8351553.top-nav.5.17f01991jFoc6k&scm=20140722.S_help%40%40%E6%96%87%E6%A1%A3%40%402529483.S_BB1%40bl%2BRQW%40ag0%2BBB2%40ag0%2Bhot%2Bos0.ID_2529483-RL_dockerfile%E4%BC%98%E5%8C%96-LOC_console~UND~help-OR_ser-V_3-P0_0)
+8. 函数计算FC3.0 创建无特权命名空间  支持singularity的支持和sif挂载
+   ```
+      root@15ac0d6378f1:/home/temp/outputSif# singularity -d  exec ./ubuntu1604_py3_cellimage.sif python
+      
+      VERBOSE [U=0,P=126]        wait_child()                  stage 1 exited with status 0
+      DEBUG   [U=0,P=126]        init()                        Applying stage 1 working directory
+      DEBUG   [U=0,P=126]        cleanup_fd()                  Close file descriptor 4
+      DEBUG   [U=0,P=126]        cleanup_fd()                  Close file descriptor 5
+      DEBUG   [U=0,P=126]        cleanup_fd()                  Close file descriptor 6
+      DEBUG   [U=0,P=126]        init()                        Set child signal mask
+      DEBUG   [U=0,P=126]        init()                        Create socketpair for master communication channel
+      DEBUG   [U=0,P=126]        init()                        Create RPC socketpair for communication between stage 2 and RPC server
+      VERBOSE [U=0,P=126]        user_namespace_init()         Create user namespace
+      VERBOSE [U=0,P=126]        create_namespace()            Create user namespace
+      ERROR   [U=0,P=126]        init()                        Failed to create user namespace: Operation not permitted
+   ```
+      参考解决方案-
+     1. change compile singularity：
+      ```shell
+         ./mconfig --without-setuid &&  make -C ./builddir &&  make -C ./builddir install
+      ```
+     2. 
+     ```shell
+         sudo singularity -d exec --userns ...sif python
+     ```
+     3. chang user
+     ```shell
+         FROM ubuntu
+         RUN useradd testuser
+         RUN echo testuser - nice 0 > /etc/security/limits.conf
+         CMD su testuser
+     ```
+9. [Dockerfile优化推荐](https://help.aliyun.com/zh/acr/user-guide/dockerfile-syntax-analysis-function?spm=5176.8351553.top-nav.5.17f01991jFoc6k&scm=20140722.S_help%40%40%E6%96%87%E6%A1%A3%40%402529483.S_BB1%40bl%2BRQW%40ag0%2BBB2%40ag0%2Bhot%2Bos0.ID_2529483-RL_dockerfile%E4%BC%98%E5%8C%96-LOC_console~UND~help-OR_ser-V_3-P0_0)
