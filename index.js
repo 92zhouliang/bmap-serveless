@@ -1,7 +1,8 @@
 'use strict';
 
 const express = require('express');
-const { execZipFile } = require('./helper/ossClient')
+const { execZipFile } = require('./helper/ossClient');
+const { initialize } = require('./helper/initial')
 
 // Constants
 const PORT = 9000;
@@ -13,8 +14,14 @@ const app = express();
 app.use(express.json({type:['application/json', 'application/octet-stream']}))
 
 // 初始化回调示例，需要在函数配置中配置初始化回调
-app.post('/initialize', (req, res) => {
-  res.send('Hello FunctionCompute, /initialize\n');
+app.post('/initialize',  (req, res) => {
+  initialize().then(res=>{
+    if(response === 200) {
+      res.send('initialize status is 200, /initialize\n')
+    }
+  }).catch(err=>{
+    res.status(400).send(response)
+  })
 });
 
 // 事件函数调用
