@@ -1,4 +1,5 @@
 /node_modules/
 .vscode/
 tmp/*
-local/ubuntu1604_py3_cellimage.sif
+local/*.sif
+local/*.raw

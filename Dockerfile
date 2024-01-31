@@ -2,7 +2,7 @@
 FROM ubuntu:20.04
 
 # 切换到root用户
-USER root
+#USER root
 
 # 更新软件包列表并安装必要的依赖 squashfs-tools-ng
 RUN apt-get update && apt-get upgrade -y && apt-get install sudo
@@ -45,12 +45,12 @@ RUN export VERSION=1.14.12 OS=linux ARCH=amd64 && \
 # 配置go PATH
 ENV GOPATH /go
 ENV PATH $PATH:/usr/local/go/bin:$GOPATH/bin
-ENV GOPROXY=https://goproxy.io,direct
+# ENV GOPROXY=https://goproxy.io,direct
 
 # 下载 singularity脚本 https://github.com/sylabs/singularity.git
 RUN git clone https://gitclone.com/github.com/sylabs/singularity.git && \    
     cd singularity && \    
-    git checkout v3.5.1
+    git checkout v3.7.1
 
 # singularity
 WORKDIR /usr/local/singularity
@@ -77,6 +77,10 @@ EXPOSE 9000
 
 # 定义环境变量
 ENV NODE_ENV production
+
+# 挂载主机目录到容器中
+USER root
+VOLUME /path/to/host/directory
 
 # 运行命令
 # ENTRYPOINT ["node"]
