@@ -29,8 +29,8 @@ RUN sudo apt-get install -y -qq \
 # 进入usr/local
 WORKDIR /usr/local
 
-# 下载Node.js 16.20.0版本
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && apt-get install -y nodejs
+# 下载Node.js 16.20.0版本    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && sudo  apt-get install -y nodejs
 
 RUN echo "export NODE_HOME=/usr/local/node" >> /etc/profile && \
     echo "export PATH=$NODE_HOME/bin:$PATH" >> /etc/profile && /bin/bash -c "source /etc/profile"
