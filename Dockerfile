@@ -9,6 +9,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install sudo
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN sudo apt-get install -y -qq \  
+    net-tools \
     vim \
     curl \
     tzdata \
@@ -45,7 +46,7 @@ RUN export VERSION=1.14.12 OS=linux ARCH=amd64 && \
 # 配置go PATH
 ENV GOPATH /go
 ENV PATH $PATH:/usr/local/go/bin:$GOPATH/bin
-# ENV GOPROXY=https://goproxy.io,direct
+# ENV GOPROXY=https://goproxy.cn
 
 # 下载 singularity脚本 https://github.com/sylabs/singularity.git
 RUN git clone https://gitclone.com/github.com/sylabs/singularity.git && \    
@@ -56,7 +57,7 @@ RUN git clone https://gitclone.com/github.com/sylabs/singularity.git && \
 WORKDIR /usr/local/singularity
 
 # 编译前修改makefile使用的 goPath
-RUN sed -i '$i\GOPROXY := https:\/\/goproxy.io,direct/' mlocal/frags/go_common_opts.mk
+RUN sed -i '$i\GOPROXY := https:\/\/goproxy.cn' mlocal/frags/go_common_opts.mk
 
 # 编译singularity
 RUN ./mconfig && \    

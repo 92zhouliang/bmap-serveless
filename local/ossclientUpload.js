@@ -32,18 +32,21 @@ const headers = {
 
 // 开始分片上传。
 async function multipartUpload() {
-  const objectName ='imgdir/ubuntu23.10-amd64.raw';
-  const filePath = path.normalize('E:\\VM-export\\ubuntu23.10-amd64.raw');
+  const objectName ='/imgdir/ubuntu20.04-node.raw';
+  const filePath = path.normalize('E:\\VM-export\\ubuntu20.04-node.raw');
   const partSize =2* 800 * 1024 * 1024; //6*  800 *10M
   try {
     // 初始化分片上传
+    console.time('multipartUpload');
     const result = await client.multipartUpload(objectName,filePath, {
       progress,
       timeout,
-      parallel:2,
+      parallel:3,
       partSize
     });
-    console.log(result,'result')
+    console.timeEnd('multipartUpload')
+    
+    // const result = await client.initMultipartUpload(objectName, {});
     // // 获取上传ID
     // const uploadId = result.uploadId;
 
@@ -85,7 +88,7 @@ async function multipartUpload() {
   // try {
   //   // 依次填写Object完整路径（例如exampledir/exampleobject.txt）和本地文件的完整路径（例如D:\\localpath\\examplefile.txt）。Object完整路径中不能包含Bucket名称。
   //   // 如果本地文件的完整路径中未指定本地路径（例如examplefile.txt），则默认从示例程序所属项目对应本地路径中上传文件。
-  //   const result = await client.multipartUpload(objectName, path.normalize('E:\\VM-export\\ubuntu23.10-amd64.raw'), {
+  //   const result = await client.multipartUpload(objectName, path.normalize('E:\\VM-export\\ubuntu64mini.raw'), {
   //     progress,
   //     headers,
   //     parallel:2,
