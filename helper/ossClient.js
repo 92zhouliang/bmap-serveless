@@ -1,6 +1,6 @@
 const OSS = require("ali-oss");
 const { isProd, ossClientTimeout } = require("./utils");
-const { unzipFile2Target } = require("./upzip");
+const { unzipFile2Target } = require("./unzip");
 
 /**
  * @param {region:string as 'cn-beijing',filename: string as 'xxx.zip'}
