@@ -12,13 +12,12 @@ const app = express();
 // 解析JSON格式的请求体
 app.use(express.json({type:['application/json', 'application/octet-stream']}))
 
-// 初始化回调示例，需要在函数配置中配置初始化回调
-app.post('/initialize', (req, res) => {
-  res.send('Hello FunctionCompute, /initialize\n');
+app.get('/health', (req, res) => {
+  res.send('Hello FunctionCompute, /\n server is runninng on 9000');
 });
 
-// 事件函数调用
-app.post('/invoke', async (req, res) => {
+// controller
+app.post('/main-exec', async (req, res) => {
  console.log(`FC Invoke Start`)
  try {
   //  console.log(req.body,'params');;

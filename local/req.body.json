@@ -1,5 +1,8 @@
 {
   "body": {
+    "region":"cn-beijing",
+    "filename":"sourceCode.zip",
+    "***":"以下为FC事件函数入参模板",
     "data": {
       "eventName": "ObjectCreated:PostObject",
       "eventSource": "acs:oss",

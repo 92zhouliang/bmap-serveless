@@ -32,8 +32,8 @@ const headers = {
 
 // 开始分片上传。
 async function multipartUpload() {
-  const objectName ='/imgdir/ubuntu20.04-node.raw';
-  const filePath = path.normalize('E:\\VM-export\\ubuntu20.04-node.raw');
+  const objectName ='/imgdir/ubuntu20.04serve.raw';
+  const filePath = path.normalize('E:\\VM-export\\ubuntu20.04serve.raw');
   const partSize =2* 800 * 1024 * 1024; //6*  800 *10M
   try {
     // 初始化分片上传

@@ -2,12 +2,13 @@ const OSS = require("ali-oss");
 const { isProd, ossClientTimeout } = require("./utils");
 const { unzipFile2Target } = require("./upzip");
 
-// 解析oss zip文件
-const execZipFile = async (event) => {
-  const { data: ossData, ...other } = event;
-  const { region, oss } = ossData;
+/**
+ * @param {region:string as 'cn-beijing',filename: string as 'xxx.zip'}
+ * @returns ossIns as OSSObj
+*/
+const createOss = ({region,filename}) =>{
   const region_name = `oss-${region}`;
-  const ossClient = new OSS({
+  const ossIns = new OSS({
     region: region_name,
     bucket: "bmap-base-image",
     accessKeyId: "LTAI5tSHfDTRehnyGgrZvCEb", // process.env.OSS_ACCESS_KEY_ID
@@ -20,8 +21,16 @@ const execZipFile = async (event) => {
         }
       : {}),
   });
-  // console.log("ossClient \n", JSON.stringify(ossClient));
-  const fileName = oss.object.key;
+  return ossIns;
+}
+
+/**
+ * @param {region:string as 'cn-beijing',filename: string as 'xxx.zip',...others}
+ * @returns ossIns as OSSObj
+ * @description 解析oss zip文件
+*/
+const execZipFile = async ({region,filename}) => {
+  const ossClient = createOss({region,fileName})
   try {
     const zipPath = `./tmp/${fileName}`;
     // zip文件名不要出现特殊字符 . 等
@@ -38,4 +47,4 @@ const execZipFile = async (event) => {
   }
 };
 
-module.exports = { execZipFile };
+module.exports = { execZipFile,createOss };
