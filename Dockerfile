@@ -10,7 +10,7 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN sudo apt-get install -y -qq \  
     net-tools \
-    unzip \
+    dos2unix \
     vim \
     curl \
     tzdata \

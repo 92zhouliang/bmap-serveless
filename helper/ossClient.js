@@ -30,12 +30,12 @@ const createOss = ({region,filename}) =>{
  * @description 解析oss zip文件
 */
 const execZipFile = async ({region,filename}) => {
-  const ossClient = createOss({region,fileName})
+  const ossClient = createOss({region,filename})
   try {
-    const zipPath = `./tmp/${fileName}`;
+    const zipPath = `./tmp/${filename}`;
     // zip文件名不要出现特殊字符 . 等
-    const zipFileName = fileName.split(".")[0];
-    const { res } = await ossClient.get(fileName, `./tmp/${fileName}`);
+    const zipFileName = filename.split(".")[0];
+    const { res } = await ossClient.get(filename, `./tmp/${filename}`);
     if (res.status === 200) {
       //文件获取成功
       await unzipFile2Target(zipPath, zipFileName);

@@ -66,7 +66,7 @@ const unzipFile2Target = (zipFilePath, zipFileName) => {
     }
   });
 };
-unzipFile2Target('./helper/sourceCode.zip','sourceCode');
+// unzipFile2Target('./helper/sourceCode.zip','sourceCode');
 module.exports = {
   unzipFile2Target,
 };
